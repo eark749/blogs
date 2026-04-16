@@ -13,7 +13,7 @@ import {
   WorkSans_600SemiBold, 
   WorkSans_700Bold 
 } from '@expo-google-fonts/work-sans';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, ActivityIndicator, Platform } from 'react-native';
 import { ThemeProvider, useTheme } from '../src/context/ThemeContext';
 import { StaggeredMenu } from '../src/components/StaggeredMenu';
 
