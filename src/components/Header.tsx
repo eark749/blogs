@@ -89,14 +89,19 @@ const styles = StyleSheet.create({
     borderRadius: 26, // Keep perfect pill geometry (height / 2)
     ...Platform.select({
       web: {
-        position: 'sticky',
-        top: 16, 
+        position: 'fixed',
+        top: 24, 
+        left: '50%',
+        // @ts-ignore
+        transform: 'translateX(-50%)',
+        width: '92%',
+        maxWidth: 800,
         backdropFilter: 'blur(24px)',
         zIndex: 1000,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 8 },
-        shadowOpacity: 0.08,
-        shadowRadius: 20,
+        shadowOpacity: 0.12,
+        shadowRadius: 24,
         elevation: 5,
         borderWidth: 1,
         borderColor: 'rgba(255, 255, 255, 0.1)',

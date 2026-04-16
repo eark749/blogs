@@ -16,6 +16,7 @@ import {
 import { View, StyleSheet, ActivityIndicator, Platform } from 'react-native';
 import { ThemeProvider, useTheme } from '../src/context/ThemeContext';
 import { StaggeredMenu } from '../src/components/StaggeredMenu';
+import { Header } from '../src/components/Header';
 
 function RootContent() {
   const { isMenuOpen, setIsMenuOpen } = useTheme();
@@ -35,6 +36,7 @@ function RootContent() {
 
   return (
     <View style={styles.container}>
+      <Header />
       <Stack
         screenOptions={{
           headerShown: false,

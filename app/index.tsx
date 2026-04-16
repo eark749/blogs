@@ -19,10 +19,6 @@ export default function Home() {
 
   return (
     <ContentLayout ref={scrollRef}>
-      <Section>
-        <Header />
-      </Section>
-      
       <Hero />
       
       <Section style={styles.postsContainer}>

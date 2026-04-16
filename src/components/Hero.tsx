@@ -35,10 +35,13 @@ export function Hero() {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingTop: Platform.OS === 'web' ? 40 : 20, // Small whitespace after navbar
+    height: Platform.OS === 'web' ? '100vh' : 500, // Full screen height on web
+    justifyContent: 'flex-start', // Top align
+    alignItems: 'center', // Center the innerContainer horizontally
+    paddingTop: Platform.OS === 'web' ? 280 : 120, // Increased to clear fixed navbar
     marginBottom: lightTheme.spacing.xxl,
     position: 'relative',
-    alignItems: 'center',
+    overflow: 'hidden',
   },
   innerContainer: {
     width: '100%',
