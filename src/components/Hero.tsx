@@ -19,9 +19,17 @@ export function Hero() {
           <Typography variant="displayLg" weight="bold" style={styles.headline}>
             Tech, decoded for humans by Human.
           </Typography>
-          <Typography variant="bodyLg" color={currentTheme.colors.primaryContainer} style={styles.subheadline}>
-            (P.S. — Won't bore you with AI-generated text)
-          </Typography>
+          <View style={[
+            styles.subheadlineGlass, 
+            { 
+              backgroundColor: mode === 'light' ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.03)',
+              borderColor: mode === 'light' ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.08)' 
+            }
+          ]}>
+            <Typography variant="bodyLg" color={currentTheme.colors.primaryContainer} style={styles.subheadline}>
+              (P.S. — Won't bore you with AI-generated text)
+            </Typography>
+          </View>
         </View>
       </View>
     </View>
@@ -65,12 +73,25 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'web' ? '"JetBrains Mono", "Fira Code", monospace' : 'monospace',
     letterSpacing: -0.5,
   },
+  subheadlineGlass: {
+    borderRadius: 999,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    marginTop: lightTheme.spacing.md,
+    ...Platform.select({
+      web: {
+        // @ts-ignore
+        backdropFilter: 'blur(12px)',
+      }
+    })
+  },
   subheadline: {
-    fontSize: 18,
-    lineHeight: 28,
-    opacity: 0.7,
+    fontSize: 16,
+    lineHeight: 16, // Tight for pill centering
     textAlign: 'center',
     fontFamily: Platform.OS === 'web' ? '"JetBrains Mono", "Fira Code", monospace' : 'monospace',
+    letterSpacing: 0.5,
   },
 });
 
