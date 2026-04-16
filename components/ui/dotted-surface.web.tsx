@@ -5,7 +5,7 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 export function DottedSurface({ className, ...props }: any) {
-    console.log("DottedSurface (Web) Rendering in Hero Section");
+	console.log("DottedSurface (Web) Rendering in Hero Section");
 	const { theme } = useTheme();
 
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -117,7 +117,7 @@ export function DottedSurface({ className, ...props }: any) {
 			positionAttribute.needsUpdate = true;
 
 			renderer.render(scene, camera);
-			count += 0.21; // Massive speed boost for high energy
+			count += 0.13; // Slightly reduced speed as requested
 		};
 
 		// Handle window resize
