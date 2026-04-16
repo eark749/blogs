@@ -10,17 +10,24 @@ export function Hero() {
 
   return (
     <View style={styles.container}>
-      {Platform.OS === 'web' && <DottedSurface style={styles.background} />}
-      
       {/* Editorial Headline */}
-      <View style={styles.textContainer}>
-        <Typography variant="displayLg" weight="bold" style={styles.headline}>
-          Tech, decoded for humans by Human.
-        </Typography>
-        <Typography variant="bodyLg" color={currentTheme.colors.primaryContainer} style={styles.subheadline}>
-          (P.S. — Won't bore you with AI-generated text)
-        </Typography>
+      <View style={styles.innerContainer}>
+        <View style={styles.textContainer}>
+          <Typography variant="displayLg" weight="bold" style={styles.headline}>
+            Tech, decoded for humans by Human.
+          </Typography>
+          <Typography variant="bodyLg" color={currentTheme.colors.primaryContainer} style={styles.subheadline}>
+            (P.S. — Won't bore you with AI-generated text)
+          </Typography>
+        </View>
       </View>
+
+      {/* 3D Dots Section - Now Sequential */}
+      {Platform.OS === 'web' && (
+        <View style={styles.dotsWrapper}>
+          <DottedSurface />
+        </View>
+      )}
     </View>
   );
 }
@@ -28,23 +35,24 @@ export function Hero() {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 500, // Fixed height for the hero section to contain the dots
-    justifyContent: 'center',
+    paddingTop: Platform.OS === 'web' ? 40 : 20, // Small whitespace after navbar
     marginBottom: lightTheme.spacing.xxl,
     position: 'relative',
-    overflow: 'hidden',
+    alignItems: 'center',
   },
-  background: {
-    position: 'absolute',
-    top: 0,
-    left: -100, // Extend slightly beyond container for better parallax/movement coverage
-    right: -100,
-    bottom: 0,
-    zIndex: -1,
+  innerContainer: {
+    width: '100%',
+    maxWidth: 800,
+    paddingHorizontal: lightTheme.spacing.lg,
+    marginBottom: 40, // Space between text and dots
   },
   textContainer: {
     maxWidth: 700,
-    zIndex: 1, // Ensure text is above dots
+  },
+  dotsWrapper: {
+    width: '100%',
+    height: 400, // Explicit height for the sequential animation block
+    marginTop: -20, // Pull dots up slightly closer to text
   },
   headline: {
     marginBottom: lightTheme.spacing.md,
@@ -52,6 +60,6 @@ const styles = StyleSheet.create({
   subheadline: {
     fontSize: 20,
     lineHeight: 30,
-    opacity: 0.8,
   },
 });
+

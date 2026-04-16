@@ -19,12 +19,16 @@ export const ContentLayout = forwardRef<ScrollView, LayoutProps>(({ children, st
       showsVerticalScrollIndicator={false}
       {...props}
     >
-      <View style={[styles.innerContainer, style]}>
-        {children}
-      </View>
+      {children}
     </ScrollView>
   );
 });
+
+export const Section = ({ children, style, ...props }: any) => (
+  <View style={[styles.innerContainer, style]} {...props}>
+    {children}
+  </View>
+);
 
 const styles = StyleSheet.create({
   container: {

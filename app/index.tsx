@@ -1,5 +1,5 @@
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { ContentLayout } from '../src/components/Layout';
+import { ContentLayout, Section } from '../src/components/Layout';
 import { Header } from '../src/components/Header';
 import { Hero } from '../src/components/Hero';
 import { PostCard } from '../src/components/PostCard';
@@ -19,10 +19,13 @@ export default function Home() {
 
   return (
     <ContentLayout ref={scrollRef}>
-      <Header />
+      <Section>
+        <Header />
+      </Section>
+      
       <Hero />
       
-      <View style={styles.postsContainer}>
+      <Section style={styles.postsContainer}>
         {MOCK_POSTS.map(post => (
           <PostCard
             key={post.id}
@@ -35,10 +38,12 @@ export default function Home() {
             onPress={() => router.push(`/post/${post.id}`)}
           />
         ))}
-      </View>
+      </Section>
 
-      <AuthorProfile />
-      <Footer onBackToTop={handleBackToTop} />
+      <Section>
+        <AuthorProfile />
+        <Footer onBackToTop={handleBackToTop} />
+      </Section>
     </ContentLayout>
   );
 }
