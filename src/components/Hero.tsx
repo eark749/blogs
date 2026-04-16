@@ -12,18 +12,17 @@ export function Hero() {
       {/* Editorial Headline */}
       <View style={styles.textContainer}>
         <Typography variant="displayLg" weight="bold" style={styles.headline}>
-          The Architecture of Minimalist Living —
+          Tech, decoded for humans by Human.
         </Typography>
         <Typography variant="bodyLg" color={currentTheme.colors.primaryContainer} style={styles.subheadline}>
-          Exploring the intersection of physical space and digital clarity. 
-          A curated perspective on editorial design in the modern age.
+          (P.S. — Won't bore you with AI-generated text)
         </Typography>
       </View>
 
       {/* Featured Asset */}
       <View style={[styles.imageContainer, { backgroundColor: currentTheme.colors.surfaceContainerLow }]}>
-        <Image 
-          source={require('../../assets/hero.png')} 
+        <Image
+          source={require('../../assets/hero.png')}
           style={styles.image}
           resizeMode="cover"
         />

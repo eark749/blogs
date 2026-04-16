@@ -10,14 +10,15 @@ interface PostCardProps {
   date: string;
   excerpt: string;
   imageUrl?: string;
+  onPress?: () => void;
 }
 
-export function PostCard({ category, title, author, date, excerpt, imageUrl }: PostCardProps) {
+export function PostCard({ category, title, author, date, excerpt, imageUrl, onPress }: PostCardProps) {
   const { theme: mode } = useTheme();
   const currentTheme = mode === 'light' ? lightTheme : darkTheme;
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={onPress}>
       {/* Category */}
       <Typography variant="labelMd" color={currentTheme.colors.outlineVariant} style={styles.category}>
         {category}
@@ -64,7 +65,7 @@ export function PostCard({ category, title, author, date, excerpt, imageUrl }: P
           />
         </View>
       )}
-    </View>
+    </Pressable>
   );
 }
 

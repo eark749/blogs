@@ -12,11 +12,6 @@ export function Footer({ onBackToTop }: FooterProps) {
   const { theme: mode } = useTheme();
   const currentTheme = mode === 'light' ? lightTheme : darkTheme;
 
-  const socialLinks = [
-    { name: 'Instagram', url: '#' },
-    { name: 'Dribbble', url: '#' },
-    { name: 'Facebook', url: '#' },
-  ];
 
   return (
     <View style={styles.footer}>
@@ -24,15 +19,6 @@ export function Footer({ onBackToTop }: FooterProps) {
 
       <View style={styles.content}>
         <View style={styles.left}>
-          <View style={styles.socials}>
-            {socialLinks.map((link, i) => (
-              <TouchableOpacity key={link.name} onPress={() => { }}>
-                <Typography variant="labelMd" color={currentTheme.colors.onSurface} style={styles.socialLink}>
-                  {link.name}{i < socialLinks.length - 1 ? '  •' : ''}
-                </Typography>
-              </TouchableOpacity>
-            ))}
-          </View>
           <Typography variant="labelMd" color={currentTheme.colors.outlineVariant} style={styles.copyright}>
             © 2026 Vansh soni — All rights reserved.
           </Typography>
@@ -62,7 +48,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     height: 1,
-    marginBottom: lightTheme.spacing.xl,
+    marginBottom: lightTheme.spacing.sm,
   },
   content: {
     flexDirection: 'row',
@@ -71,13 +57,6 @@ const styles = StyleSheet.create({
   },
   left: {
     flex: 1,
-  },
-  socials: {
-    flexDirection: 'row',
-    marginBottom: lightTheme.spacing.sm,
-  },
-  socialLink: {
-    marginRight: lightTheme.spacing.sm,
   },
   copyright: {
     fontSize: 12,
