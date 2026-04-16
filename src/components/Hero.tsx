@@ -10,7 +10,10 @@ export function Hero() {
 
   return (
     <View style={styles.container}>
-      {/* Editorial Headline */}
+      {/* 3D Dots Field - Background Model */}
+      {Platform.OS === 'web' && <DottedSurface style={styles.background} />}
+
+      {/* Editorial Headline - Centered Over Dots */}
       <View style={styles.innerContainer}>
         <View style={styles.textContainer}>
           <Typography variant="displayLg" weight="bold" style={styles.headline}>
@@ -21,13 +24,6 @@ export function Hero() {
           </Typography>
         </View>
       </View>
-
-      {/* 3D Dots Section - Now Sequential */}
-      {Platform.OS === 'web' && (
-        <View style={styles.dotsWrapper}>
-          <DottedSurface />
-        </View>
-      )}
     </View>
   );
 }
@@ -35,34 +31,46 @@ export function Hero() {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: Platform.OS === 'web' ? '100vh' : 500, // Full screen height on web
-    justifyContent: 'flex-start', // Top align
-    alignItems: 'center', // Center the innerContainer horizontally
-    paddingTop: Platform.OS === 'web' ? 280 : 120, // Increased to clear fixed navbar
+    height: Platform.OS === 'web' ? '100vh' : 500, // Immersive full height
+    justifyContent: 'center', // Exactly centered vertically
+    alignItems: 'center', // Exactly centered horizontally
     marginBottom: lightTheme.spacing.xxl,
     position: 'relative',
     overflow: 'hidden',
+  },
+  background: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: -1,
   },
   innerContainer: {
     width: '100%',
     maxWidth: 800,
     paddingHorizontal: lightTheme.spacing.lg,
-    marginBottom: 40, // Space between text and dots
+    alignItems: 'center', // Center content horizontally
+    zIndex: 1,
+    marginTop: -50, // Slight upward shift for perfect balance
   },
   textContainer: {
     maxWidth: 700,
-  },
-  dotsWrapper: {
-    width: '100%',
-    height: 400, // Explicit height for the sequential animation block
-    marginTop: -20, // Pull dots up slightly closer to text
+    alignItems: 'center', // Center text alignment
   },
   headline: {
     marginBottom: lightTheme.spacing.md,
+    textAlign: 'center',
+    // Monospace aesthetic to match user reference
+    fontFamily: Platform.OS === 'web' ? '"JetBrains Mono", "Fira Code", monospace' : 'monospace',
+    letterSpacing: -0.5,
   },
   subheadline: {
-    fontSize: 20,
-    lineHeight: 30,
+    fontSize: 18,
+    lineHeight: 28,
+    opacity: 0.7,
+    textAlign: 'center',
+    fontFamily: Platform.OS === 'web' ? '"JetBrains Mono", "Fira Code", monospace' : 'monospace',
   },
 });
 

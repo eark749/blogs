@@ -21,21 +21,23 @@ export function DottedSurface({ className, ...props }: any) {
 	useEffect(() => {
 		if (!containerRef.current) return;
 
-		const SEPARATION = 200;
-		const AMOUNTX = 30;
-		const AMOUNTY = 40;
+		const SEPARATION = 55;
+		const AMOUNTX = 130;
+		const AMOUNTY = 200;
 
 		// Scene setup
 		const scene = new THREE.Scene();
-		scene.fog = new THREE.Fog(theme === 'dark' ? 0x121212 : 0xffffff, 2000, 10000);
+		const bgColor = theme === 'dark' ? 0x121212 : 0xffffff;
+		scene.fog = new THREE.Fog(bgColor, 400, 2500);
 
 		const camera = new THREE.PerspectiveCamera(
-			60,
+			50,
 			window.innerWidth / window.innerHeight,
 			1,
 			10000,
 		);
-		camera.position.set(0, 355, 1220);
+		camera.position.set(0, 180, 1000);
+		camera.lookAt(0, 0, 0);
 
 		const renderer = new THREE.WebGLRenderer({
 			alpha: true,
@@ -48,7 +50,6 @@ export function DottedSurface({ className, ...props }: any) {
 		containerRef.current.appendChild(renderer.domElement);
 
 		// Create particles
-		const particles: THREE.Points[] = [];
 		const positions: number[] = [];
 		const colors: number[] = [];
 
@@ -63,9 +64,9 @@ export function DottedSurface({ className, ...props }: any) {
 
 				positions.push(x, y, z);
 				if (theme === 'dark') {
-					colors.push(0.8, 0.8, 0.8);
+					colors.push(1.0, 1.0, 1.0); // Pure white in dark mode
 				} else {
-					colors.push(0.1, 0.1, 0.1);
+					colors.push(0.0, 0.0, 0.0); // Absolute black in light mode
 				}
 			}
 		}
@@ -78,10 +79,10 @@ export function DottedSurface({ className, ...props }: any) {
 
 		// Create material
 		const material = new THREE.PointsMaterial({
-			size: 24,
+			size: 2.5,
 			vertexColors: true,
 			transparent: true,
-			opacity: 0.9,
+			opacity: 1.0, // Maximum visibility as requested
 			sizeAttenuation: true,
 		});
 
@@ -104,10 +105,10 @@ export function DottedSurface({ className, ...props }: any) {
 				for (let iy = 0; iy < AMOUNTY; iy++) {
 					const index = i * 3;
 
-					// Animate Y position with sine waves
+					// Subtle, smooth wave animation
 					positions[index + 1] =
-						Math.sin((ix + count) * 0.3) * 60 +
-						Math.sin((iy + count) * 0.5) * 60;
+						Math.sin((ix + count) * 0.2) * 20 +
+						Math.sin((iy + count) * 0.4) * 20;
 
 					i++;
 				}
@@ -116,7 +117,7 @@ export function DottedSurface({ className, ...props }: any) {
 			positionAttribute.needsUpdate = true;
 
 			renderer.render(scene, camera);
-			count += 0.08;
+			count += 0.12; // High-speed dynamic waves
 		};
 
 		// Handle window resize
