@@ -21,14 +21,14 @@ export function DottedSurface({ className, ...props }: any) {
 	useEffect(() => {
 		if (!containerRef.current) return;
 
-		const SEPARATION = 55;
-		const AMOUNTX = 130;
-		const AMOUNTY = 200;
+		const SEPARATION = 42;
+		const AMOUNTX = 170;
+		const AMOUNTY = 280;
 
 		// Scene setup
 		const scene = new THREE.Scene();
 		const bgColor = theme === 'dark' ? 0x121212 : 0xffffff;
-		scene.fog = new THREE.Fog(bgColor, 400, 2500);
+		scene.fog = new THREE.Fog(bgColor, 500, 3000);
 
 		const camera = new THREE.PerspectiveCamera(
 			50,
@@ -107,8 +107,8 @@ export function DottedSurface({ className, ...props }: any) {
 
 					// Subtle, smooth wave animation
 					positions[index + 1] =
-						Math.sin((ix + count) * 0.2) * 20 +
-						Math.sin((iy + count) * 0.4) * 20;
+						Math.sin((ix + count) * 0.2) * 18 +
+						Math.sin((iy + count) * 0.4) * 18;
 
 					i++;
 				}
@@ -117,7 +117,7 @@ export function DottedSurface({ className, ...props }: any) {
 			positionAttribute.needsUpdate = true;
 
 			renderer.render(scene, camera);
-			count += 0.12; // High-speed dynamic waves
+			count += 0.21; // Massive speed boost for high energy
 		};
 
 		// Handle window resize
