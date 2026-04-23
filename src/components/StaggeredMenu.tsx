@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Pressable, Dimensions, Platform, useWindowDimensions } from 'react-native';
+import { View, StyleSheet, Pressable, Dimensions, Platform, useWindowDimensions, Linking } from 'react-native';
 import Animated, { 
   useSharedValue, 
   useAnimatedStyle, 
@@ -12,6 +12,7 @@ import { Typography } from './Typography';
 import { theme as lightTheme, darkTheme } from '../theme';
 import { useTheme } from '../context/ThemeContext';
 import { Feather } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
@@ -27,6 +28,7 @@ export function StaggeredMenu({ isOpen, onClose, items, socialItems }: MenuProps
   const currentTheme = mode === 'light' ? lightTheme : darkTheme;
   const { width } = useWindowDimensions();
   const isMobile = width < 600;
+  const router = useRouter();
   
   const opacity = useSharedValue(0);
   const translateY = useSharedValue(SCREEN_HEIGHT);
@@ -86,9 +88,14 @@ export function StaggeredMenu({ isOpen, onClose, items, socialItems }: MenuProps
         <View style={styles.linksContainer}>
           {items.map((item, index) => (
             <AnimatedItem key={item.label} index={index} isOpen={isOpen}>
-               <Typography variant="displayLg" style={[styles.menuItem, { color: currentTheme.colors.primary }]}>
-                  {item.label}
-               </Typography>
+               <Pressable onPress={() => {
+                 onClose();
+                 router.push(item.link as any);
+               }}>
+                 <Typography variant="displayLg" style={[styles.menuItem, { color: currentTheme.colors.primary }]}>
+                    {item.label}
+                 </Typography>
+               </Pressable>
             </AnimatedItem>
           ))}
         </View>
@@ -97,9 +104,14 @@ export function StaggeredMenu({ isOpen, onClose, items, socialItems }: MenuProps
           <View style={styles.socials}>
             {socialItems.map((social, index) => (
                <AnimatedItem key={social.label} index={items.length + index} isOpen={isOpen}>
-                  <Typography variant="labelMd" style={[styles.socialItem, { color: currentTheme.colors.primary }]}>
-                    {social.label}
-                  </Typography>
+                  <Pressable onPress={() => {
+                    onClose();
+                    Linking.openURL(social.link);
+                  }}>
+                    <Typography variant="labelMd" style={[styles.socialItem, { color: currentTheme.colors.primary }]}>
+                      {social.label}
+                    </Typography>
+                  </Pressable>
                </AnimatedItem>
             ))}
           </View>

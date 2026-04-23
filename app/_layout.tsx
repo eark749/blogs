@@ -31,9 +31,9 @@ function RootContent() {
   ];
 
   const socialItems = [
-    { label: 'Instagram', link: '#' },
-    { label: 'Dribbble', link: '#' },
-    { label: 'Facebook', link: '#' }
+    { label: 'Email', link: 'mailto:vanshsoniofficial@gmail.com' },
+    { label: 'LinkedIn', link: 'https://linkedin.com/in/vanshsoni' },
+    { label: 'GitHub', link: 'https://github.com/eark749' }
   ];
 
   return (
