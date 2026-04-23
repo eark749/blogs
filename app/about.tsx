@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, ScrollView, Platform } from 'react-native';
 import { ContentLayout, Section } from '../src/components/Layout';
 import { Footer } from '../src/components/Footer';
 import { Typography } from '../src/components/Typography';
@@ -16,77 +16,120 @@ export default function AboutScreen() {
   };
 
   return (
-    <ContentLayout ref={scrollRef}>
-      <Section style={styles.header}>
-        <Typography variant="labelMd" color={currentTheme.colors.outlineVariant} style={styles.category}>
-          ABOUT ME
-        </Typography>
-        <Typography variant="displaySm" weight="bold" style={styles.title}>
-          I'm Vansh Soni, an Applied AI Engineer specializing in developing and deploying end-to-end AI/ML and custom solutions.
-        </Typography>
-      </Section>
+    <ScrollView 
+      ref={scrollRef}
+      style={[styles.container, { backgroundColor: currentTheme.colors.surfaceContainerLow }]}
+      showsVerticalScrollIndicator={false}
+    >
+      {/* Full-width premium banner */}
+      <View style={styles.bannerWrapper}>
+        <Image 
+          source={{ uri: 'https://i.imgur.com/1ZvVkDc.gif' }} 
+          style={styles.bannerImage} 
+          resizeMode="cover" 
+          alt="banner gif"
+        />
+        {/* Subtle gradient overlay to make it blend */}
+        <View style={[styles.bannerOverlay, { backgroundColor: currentTheme.colors.surfaceContainerLow }]} />
+      </View>
 
-      <Section style={styles.imageSection}>
-        <View style={[styles.imageContainer, { backgroundColor: currentTheme.colors.surfaceContainerLow }]}>
-          {/* Placeholder image */}
-          <Image 
-            source={{ uri: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop' }} 
-            style={styles.image} 
-            resizeMode="cover" 
-          />
+      {/* Overlapping Content Card */}
+      <View style={styles.cardContainer}>
+        <View style={[
+          styles.contentCard, 
+          { 
+            backgroundColor: currentTheme.colors.surface,
+            borderColor: currentTheme.colors.surfaceContainerHighest
+          }
+        ]}>
+          <Typography variant="labelMd" color={currentTheme.colors.outlineVariant} style={styles.category}>
+            ABOUT ME
+          </Typography>
+          
+          <Typography variant="displaySm" weight="bold" style={styles.title}>
+            I'm Vansh Soni, an Applied AI Engineer specializing in developing and deploying end-to-end AI/ML and custom solutions.
+          </Typography>
+
+          <View style={styles.divider} />
+
+          <Typography variant="bodyLg" style={styles.paragraph}>
+            My expertise lies in building intelligent systems from the ground up. I have deep experience working with Large Language Models (RAG, Fine-tuning), Deep Learning architectures (CNN, RNN, Transformers), and cloud platforms like AWS and Azure.
+          </Typography>
+          <Typography variant="bodyLg" style={styles.paragraph}>
+            Currently, my work heavily involves agent orchestration frameworks such as LangChain, LlamaIndex, Multiple Agent Development Kit (ADK), and CrewAI. I've designed and delivered high-impact systems ranging from real-time Voice AI applications with sub-500ms latency to enterprise-scale HR automation bots and intelligent medical data retrieval backends.
+          </Typography>
+          <Typography variant="bodyLg" style={styles.paragraph}>
+            I am passionate about transforming complex datasets into strategic insights and architecting custom AI solutions that drive real business value. Whether it's optimizing an STT→LLM→TTS streaming pipeline or building a scalable backend with Python and FastAPI, I thrive on navigating the ambiguity of modern AI engineering.
+          </Typography>
         </View>
-      </Section>
 
-      <Section style={styles.content}>
-        <Typography variant="bodyLg" style={styles.paragraph}>
-          My expertise lies in building intelligent systems from the ground up. I have deep experience working with Large Language Models (RAG, Fine-tuning), Deep Learning architectures (CNN, RNN, Transformers), and cloud platforms like AWS and Azure.
-        </Typography>
-        <Typography variant="bodyLg" style={styles.paragraph}>
-          Currently, my work heavily involves agent orchestration frameworks such as LangChain, LlamaIndex, Multiple Agent Development Kit (ADK), and CrewAI. I've designed and delivered high-impact systems ranging from real-time Voice AI applications with sub-500ms latency to enterprise-scale HR automation bots and intelligent medical data retrieval backends.
-        </Typography>
-        <Typography variant="bodyLg" style={styles.paragraph}>
-          I am passionate about transforming complex datasets into strategic insights and architecting custom AI solutions that drive real business value. Whether it's optimizing an STT→LLM→TTS streaming pipeline or building a scalable backend with Python and FastAPI, I thrive on navigating the ambiguity of modern AI engineering.
-        </Typography>
-      </Section>
-
-      <Section>
-        <Footer onBackToTop={handleBackToTop} />
-      </Section>
-    </ContentLayout>
+        <View style={styles.footerWrapper}>
+          <Footer onBackToTop={handleBackToTop} />
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    paddingTop: 100,
-    marginBottom: lightTheme.spacing.xl,
+  container: {
+    flex: 1,
+  },
+  bannerWrapper: {
+    width: '100%',
+    height: 450,
+    position: 'relative',
+  },
+  bannerImage: {
+    width: '100%',
+    height: '100%',
+  },
+  bannerOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.2, // Subtle tint matching the theme
+  },
+  cardContainer: {
+    width: '100%',
+    alignItems: 'center',
+    paddingHorizontal: lightTheme.spacing.lg,
+    marginTop: -150, // Pulls the card up over the banner
+  },
+  contentCard: {
+    width: '100%',
+    maxWidth: 900,
+    borderRadius: lightTheme.radii.lg,
+    borderWidth: 1,
+    padding: Platform.OS === 'web' ? 64 : 32,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 20 },
+    shadowOpacity: 0.08,
+    shadowRadius: 40,
+    elevation: 10,
+    marginBottom: lightTheme.spacing.xxl,
   },
   category: {
     marginBottom: lightTheme.spacing.md,
-    letterSpacing: 1,
+    letterSpacing: 2,
   },
   title: {
     marginBottom: lightTheme.spacing.xl,
     lineHeight: 48,
   },
-  imageSection: {
-    marginBottom: lightTheme.spacing.xxl,
-  },
-  imageContainer: {
-    width: '100%',
-    aspectRatio: 16 / 9,
-    borderRadius: lightTheme.radii.default,
-    overflow: 'hidden',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
-  content: {
-    marginBottom: lightTheme.spacing.xxl,
+  divider: {
+    width: 60,
+    height: 4,
+    backgroundColor: lightTheme.colors.primary,
+    marginBottom: 40,
+    borderRadius: 2,
   },
   paragraph: {
-    lineHeight: 32,
-    marginBottom: lightTheme.spacing.lg,
+    lineHeight: 34,
+    marginBottom: lightTheme.spacing.xl,
+    fontSize: 19,
   },
+  footerWrapper: {
+    width: '100%',
+    maxWidth: 800,
+    paddingBottom: 40,
+  }
 });

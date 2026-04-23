@@ -28,3 +28,6 @@ Thumbs.db
 
 expo-env.d.ts
 # @end expo-cli
+
+# Local npm cache
+.npm-cache-temp
