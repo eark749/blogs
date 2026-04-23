@@ -1,25 +1,27 @@
-import { Stack } from 'expo-router';
-import { 
-  useFonts as useNewsreaderFonts, 
-  Newsreader_400Regular, 
-  Newsreader_500Medium, 
-  Newsreader_600SemiBold, 
-  Newsreader_700Bold 
-} from '@expo-google-fonts/newsreader';
-import { 
-  useFonts as useWorkSansFonts, 
-  WorkSans_400Regular, 
-  WorkSans_500Medium, 
-  WorkSans_600SemiBold, 
-  WorkSans_700Bold 
-} from '@expo-google-fonts/work-sans';
+import { Stack, usePathname } from 'expo-router';
 import { View, StyleSheet, ActivityIndicator, Platform } from 'react-native';
 import { ThemeProvider, useTheme } from '../src/context/ThemeContext';
 import { StaggeredMenu } from '../src/components/StaggeredMenu';
 import { Header } from '../src/components/Header';
+import { useEffect, useState } from 'react';
+
+// On web, inject Google Fonts via a <link> tag instead of relying on the broken npm font packages
+function injectWebFonts() {
+  if (Platform.OS !== 'web') return;
+  if (typeof document === 'undefined') return;
+  if (document.getElementById('google-fonts-inject')) return;
+  const link = document.createElement('link');
+  link.id = 'google-fonts-inject';
+  link.rel = 'stylesheet';
+  link.href =
+    'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&family=Work+Sans:wght@400;500;600;700&display=swap';
+  document.head.appendChild(link);
+}
 
 function RootContent() {
   const { isMenuOpen, setIsMenuOpen } = useTheme();
+  const pathname = usePathname();
+  const isAdmin = pathname.startsWith('/admin');
 
   const menuItems = [
     { label: 'Home', link: '/' },
@@ -36,41 +38,40 @@ function RootContent() {
 
   return (
     <View style={styles.container}>
-      <Header />
+      {!isAdmin && <Header />}
       <Stack
         screenOptions={{
           headerShown: false,
           contentStyle: { backgroundColor: 'transparent' },
         }}
       />
-      <StaggeredMenu 
-        isOpen={isMenuOpen} 
-        onClose={() => setIsMenuOpen(false)}
-        items={menuItems}
-        socialItems={socialItems}
-      />
+      {!isAdmin && (
+        <StaggeredMenu
+          isOpen={isMenuOpen}
+          onClose={() => setIsMenuOpen(false)}
+          items={menuItems}
+          socialItems={socialItems}
+        />
+      )}
     </View>
   );
 }
 
 export default function RootLayout() {
-  const [newsreaderLoaded] = useNewsreaderFonts({
-    Newsreader_400Regular,
-    Newsreader_500Medium,
-    Newsreader_600SemiBold,
-    Newsreader_700Bold,
-  });
+  const [fontsReady, setFontsReady] = useState(false);
 
-  const [workSansLoaded] = useWorkSansFonts({
-    WorkSans_400Regular,
-    WorkSans_500Medium,
-    WorkSans_600SemiBold,
-    WorkSans_700Bold,
-  });
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      injectWebFonts();
+      // Give fonts a moment to start loading, then proceed
+      const t = setTimeout(() => setFontsReady(true), 100);
+      return () => clearTimeout(t);
+    } else {
+      setFontsReady(true);
+    }
+  }, []);
 
-  const fontsLoaded = newsreaderLoaded && workSansLoaded;
-
-  if (!fontsLoaded) {
+  if (!fontsReady) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#000000" />
@@ -80,7 +81,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider>
-       <RootContent />
+      <RootContent />
     </ThemeProvider>
   );
 }
