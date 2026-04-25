@@ -21,7 +21,7 @@ export default function Root({ children }: { children: React.ReactNode }) {
 
         {/* Open Graph / Facebook / LinkedIn / iMessage */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ae-blog.vercel.app/" />
+        <meta property="og:url" content="https://blogs-murex-psi.vercel.app/" />
         <meta property="og:title" content="Æ Blog" />
         <meta
           property="og:description"
@@ -29,12 +29,12 @@ export default function Root({ children }: { children: React.ReactNode }) {
         />
         <meta
           property="og:image"
-          content="https://ae-blog.vercel.app/assets/og-image.png"
+          content="https://blogs-murex-psi.vercel.app/og-image.png"
         />
 
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://ae-blog.vercel.app/" />
+        <meta property="twitter:url" content="https://blogs-murex-psi.vercel.app/" />
         <meta property="twitter:title" content="Æ Blog" />
         <meta
           property="twitter:description"
@@ -42,7 +42,7 @@ export default function Root({ children }: { children: React.ReactNode }) {
         />
         <meta
           property="twitter:image"
-          content="https://ae-blog.vercel.app/assets/og-image.png"
+          content="https://blogs-murex-psi.vercel.app/og-image.png"
         />
 
         <ScrollViewStyleReset />
