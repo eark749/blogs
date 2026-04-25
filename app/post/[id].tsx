@@ -1,6 +1,7 @@
-import { View, StyleSheet, Image, Pressable, ScrollView, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Image, Pressable, ScrollView, ActivityIndicator, Platform } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import Head from 'expo-router/head';
 import { Typography } from '../../src/components/Typography';
 import { ContentLayout, Section } from '../../src/components/Layout';
 import { Footer } from '../../src/components/Footer';
@@ -63,6 +64,20 @@ export default function PostScreen() {
 
   return (
     <ContentLayout ref={scrollRef}>
+      {Platform.OS === 'web' && (
+        <Head>
+          <title>{post.title} — Æ Blog</title>
+          <meta name="description" content={post.excerpt} />
+          <meta property="og:title" content={post.title} />
+          <meta property="og:description" content={post.excerpt} />
+          {post.image_url && <meta property="og:image" content={post.image_url} />}
+          <meta property="og:type" content="article" />
+          <meta property="twitter:card" content="summary_large_image" />
+          <meta property="twitter:title" content={post.title} />
+          <meta property="twitter:description" content={post.excerpt} />
+          {post.image_url && <meta property="twitter:image" content={post.image_url} />}
+        </Head>
+      )}
       <Section style={{ paddingTop: 80 }}>
         <Pressable onPress={() => router.push('/')} style={styles.backButton}>
           <Feather name="arrow-left" size={24} color={currentTheme.colors.onBackground} />
