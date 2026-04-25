@@ -18,6 +18,37 @@ function injectWebFonts() {
   document.head.appendChild(link);
 }
 
+// Inject OG meta tags for link previews
+function injectOGMetaTags() {
+  if (Platform.OS !== 'web') return;
+  if (typeof document === 'undefined') return;
+  if (document.getElementById('og-meta-inject')) return;
+
+  const siteUrl = 'https://blogs-murex-psi.vercel.app';
+  const tags = [
+    { id: 'og-meta-inject', property: 'og:type', content: 'website' },
+    { property: 'og:url', content: siteUrl },
+    { property: 'og:title', content: 'Æ Blog' },
+    { property: 'og:description', content: 'Tech, decoded for humans by Human.' },
+    { property: 'og:image', content: `${siteUrl}/og-image.png` },
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: 'Æ Blog' },
+    { name: 'twitter:description', content: 'Tech, decoded for humans by Human.' },
+    { name: 'twitter:image', content: `${siteUrl}/og-image.png` },
+  ];
+
+  tags.forEach((tag) => {
+    const meta = document.createElement('meta');
+    if ('id' in tag) meta.id = tag.id as string;
+    if ('property' in tag) meta.setAttribute('property', tag.property as string);
+    if ('name' in tag) meta.setAttribute('name', tag.name as string);
+    meta.setAttribute('content', tag.content);
+    document.head.appendChild(meta);
+  });
+
+  document.title = 'Æ Blog';
+}
+
 function RootContent() {
   const { isMenuOpen, setIsMenuOpen } = useTheme();
   const pathname = usePathname();
@@ -63,6 +94,7 @@ export default function RootLayout() {
   useEffect(() => {
     if (Platform.OS === 'web') {
       injectWebFonts();
+      injectOGMetaTags();
       // Give fonts a moment to start loading, then proceed
       const t = setTimeout(() => setFontsReady(true), 100);
       return () => clearTimeout(t);
